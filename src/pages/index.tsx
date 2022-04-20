@@ -6,6 +6,9 @@ import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import Link from "next/link";
 
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+
 import { SimpleInvoice } from "@component/SimpleInvoice";
 import { InputInvoice } from "@component/InputInvoice";
 
@@ -18,6 +21,11 @@ const schema = z.object({
 });
 
 const Home: NextPage = () => {
+  const func = async () => {
+    const docRef = doc(db, "invoice", "4ajkdekTQljlysdA3BXd");
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap.data());
+  };
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -63,6 +71,7 @@ const Home: NextPage = () => {
         <SimpleInvoice />
         <SimpleInvoice />
         <SimpleInvoice />
+        <h1 onClick={func}>sample</h1>
         <form
           onSubmit={form.onSubmit((values) =>
             console.log(JSON.stringify(values))
