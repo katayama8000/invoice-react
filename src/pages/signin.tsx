@@ -1,5 +1,13 @@
 import React from "react";
+import { SignButton } from "@component/button/SignButton";
 
-export const signin = () => {
-  return <div>signin</div>;
+const SignIn = () => {
+  return (
+    <div>
+      <h1>signin</h1>
+      <SignButton type="submit" title="sign in" />
+    </div>
+  );
 };
+
+export default SignIn;

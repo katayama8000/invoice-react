@@ -25,10 +25,10 @@ const Home: NextPage = () => {
       age: 20,
     },
 
-    // validate: {
-    //   email: (value) =>
-    //     /^\S+@\S+$/.test(value) ? null : "this email is not valid",
-    // },
+    validate: {
+      email: (value) =>
+        /^\S+@\S+$/.test(value) ? null : "this email is not valid",
+    },
   });
   const [invoices, setInvoices] = useState<number>(0);
   return (
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
             console.log(JSON.stringify(values))
           )}
         >
-          {/* <TextInput
+          <TextInput
             variant="unstyled"
             placeholder="your@email.com"
             {...form.getInputProps("name")}
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
               input: "bg-green-400",
               unstyledVariant: "bg-yellow-300",
             }}
-          /> */}
+          />
           <Group position="right" mt="md">
             <Button type="submit">Submit</Button>
           </Group>
