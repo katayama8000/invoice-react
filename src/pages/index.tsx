@@ -48,7 +48,11 @@ const Home: NextPage = () => {
                 <HeadButton title="Sign up" className="mx-2" />
               </a>
             </Link>
-            <HeadButton title="Sign in" className="mx-2" />
+            <Link href="/signin">
+              <a>
+                <HeadButton title="Sign in" className="mx-2" />
+              </a>
+            </Link>
             <HeadButton title="個人情報" className="mx-2" />
           </div>
         </div>
