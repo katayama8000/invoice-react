@@ -3,6 +3,7 @@ import { SignButton } from "@component/button/SignButton";
 import { PasswordInput, Group, Button, Box, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { NextPage } from "next";
+import Link from "next/link";
 
 const SignUp: NextPage = () => {
   const form = useForm({
@@ -21,7 +22,12 @@ const SignUp: NextPage = () => {
 
   return (
     <div className="h-screen bg-gray-800">
-      <div className="m-auto mt-36 w-1/5">
+      <div className="m-auto mt-36 w-1/5 text-white">
+        <Link href="/">
+          <a>
+            <span className="text-white">back</span>
+          </a>
+        </Link>
         <form onSubmit={form.onSubmit((values) => alert(values))}>
           <TextInput
             label="Email"

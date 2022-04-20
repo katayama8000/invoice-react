@@ -1,11 +1,11 @@
 import React from "react";
+import { StatusButton } from "@component/button/StatusButton";
 
 export const SimpleInvoice: React.VFC = () => {
   const uuid = 356734;
   const date = 2022;
   const name = "coffee";
   const price = 100;
-  const state = "pending";
 
   return (
     <div>
@@ -14,7 +14,9 @@ export const SimpleInvoice: React.VFC = () => {
         <div>{date}</div>
         <div>{name}</div>
         <div>{price}</div>
-        <div>{state}</div>
+        <div>
+          <StatusButton title="Draft" />
+        </div>
       </div>
     </div>
   );

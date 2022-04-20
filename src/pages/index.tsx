@@ -1,4 +1,4 @@
-import { Button, TextInput, Group, NumberInput } from "@mantine/core";
+import { Button, TextInput, Group, NumberInput, Drawer } from "@mantine/core";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { HeadButton } from "../components/button/HeadButton";
@@ -6,7 +6,8 @@ import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import Link from "next/link";
 
-import { SimpleInvoice } from "../components/SimpleInvoice";
+import { SimpleInvoice } from "@component/SimpleInvoice";
+import { InputInvoice } from "@component/InputInvoice";
 
 const schema = z.object({
   name: z.string().min(2, { message: "Name should have at least 2 letters" }),
@@ -33,16 +34,16 @@ const Home: NextPage = () => {
   const [invoices, setInvoices] = useState<number>(0);
   return (
     <div className="h-screen bg-gray-800">
-      <header className="m-auto max-w-5xl bg-yellow-200 p-5">
+      <header className="max-w-8xl m-auto bg-yellow-200 p-5">
         <div className="flex flex-row">
           <div className="flex basis-1/4">
-            <span>Invoices</span>
+            <div>Invoices</div>
             <br />
-            <span>There are total {invoices} invoices</span>
+            <div>There are total {invoices} invoices</div>
           </div>
           <div className="basis-1/2" />
           <div className="flex basis-1/4">
-            <HeadButton title="New Invoice" className="mx-2" />
+            <InputInvoice />
             <Link href="/signup">
               <a>
                 <HeadButton title="Sign up" className="mx-2" />
@@ -58,6 +59,7 @@ const Home: NextPage = () => {
         </div>
       </header>
       <main className="m-auto max-w-5xl text-white">
+        <SimpleInvoice />
         <SimpleInvoice />
         <SimpleInvoice />
         <SimpleInvoice />
