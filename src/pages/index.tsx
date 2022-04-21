@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
-import { HeadButton } from "../components/button/HeadButton";
 import Link from "next/link";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 import { collection, DocumentData, FirestoreError } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { NativeSelect } from "@mantine/core";
 
+import { HeadButton } from "../components/button/HeadButton";
 import { SimpleInvoice } from "@component/SimpleInvoice";
 import { InputInvoice } from "@component/InputInvoice";
 
@@ -37,8 +38,19 @@ const Home: NextPage = () => {
             <br />
             <div>There are total {data?.length} invoices</div>
           </div>
-          <div className="basis-1/2" />
-          <div className="flex basis-1/4">
+          <div className="basis-1/4" />
+          <div className="flex basis-1/2">
+            <NativeSelect
+              placeholder="filter by status"
+              data={[
+                { value: "Draft", label: "Draft" },
+                { value: "Paid", label: "Paid" },
+                { value: "Pending", label: "Pending" },
+                { value: "No-filter", label: "No-filter" },
+              ]}
+              className="mr-2"
+              onChange={(event) => alert(event.currentTarget.value)}
+            />
             <InputInvoice />
             <Link href="/signup">
               <a>
