@@ -1,21 +1,13 @@
-import { Button, TextInput, Group, NumberInput, Drawer } from "@mantine/core";
+import { Button, TextInput, Group } from "@mantine/core";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { HeadButton } from "../components/button/HeadButton";
 import { useForm, zodResolver } from "@mantine/form";
-import { date, z } from "zod";
+import { z } from "zod";
 import Link from "next/link";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-import {
-  collection,
-  doc,
-  DocumentData,
-  FirestoreError,
-  getDoc,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, DocumentData, FirestoreError } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 import { SimpleInvoice } from "@component/SimpleInvoice";
@@ -48,9 +40,6 @@ export const FirestoreCollection = (): {
 
 const Home: NextPage = () => {
   const { data } = FirestoreCollection();
-  console.log("data", data);
-
-  useEffect(() => {}, []);
 
   const form = useForm({
     schema: zodResolver(schema),

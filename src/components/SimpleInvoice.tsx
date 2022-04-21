@@ -2,21 +2,11 @@ import React from "react";
 import { StatusButton } from "@component/button/StatusButton";
 import { DocumentData } from "firebase/firestore";
 
-type invoiceItemList = {
-  id: string;
-  itemName: string;
-  price: string;
-  qty: string;
-  total: number;
-};
-
 type Props = {
   data: DocumentData[] | undefined;
 };
 
 export const SimpleInvoice: React.VFC<Props> = ({ data }) => {
-  const uuid = 356734;
-
   return (
     <div>
       {data?.map((item) => {
@@ -29,9 +19,7 @@ export const SimpleInvoice: React.VFC<Props> = ({ data }) => {
             <div>{item.invoice.paymentDueDate}</div>
             <div>{item.invoice.clientName}</div>
             <div>${item.invoice.invoiceTotal}</div>
-            <div>
-              <StatusButton title="Draft" />
-            </div>
+            <StatusButton title="Draft" />
           </div>
         );
       })}
