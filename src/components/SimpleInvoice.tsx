@@ -15,11 +15,13 @@ export const SimpleInvoice: React.VFC<Props> = ({ data }) => {
             key={item.id}
             className="mt-5 flex flex-row items-end justify-around rounded-3xl bg-gray-600 py-5 px-2"
           >
-            <div>{item.id}</div>
+            <div>{item.invoice.invoiceId}</div>
             <div>{item.invoice.paymentDueDate}</div>
             <div>{item.invoice.clientName}</div>
             <div>${item.invoice.invoiceTotal}</div>
-            <StatusButton title="Draft" />
+            {item.invoice.invoicePaid && <StatusButton title="Paid" />}
+            {item.invoice.invoiceDraft && <StatusButton title="Draft" />}
+            {item.invoice.invoicePending && <StatusButton title="Pending" />}
           </div>
         );
       })}
