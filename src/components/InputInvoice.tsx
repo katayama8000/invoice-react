@@ -119,7 +119,7 @@ export const InputInvoice = () => {
       </Drawer>
       <HeadButton
         onClick={() => setOpened(true)}
-        title="Open Drawer"
+        title="New Invoice"
         className="mx-2"
       />
     </div>
