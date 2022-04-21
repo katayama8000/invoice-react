@@ -1,6 +1,4 @@
-import { Button, TextInput, Group } from "@mantine/core";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
 import { HeadButton } from "../components/button/HeadButton";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
@@ -82,24 +80,6 @@ const Home: NextPage = () => {
       </header>
       <main className="m-auto max-w-5xl text-white">
         <SimpleInvoice data={data} />
-        <form
-          onSubmit={form.onSubmit((values) =>
-            console.log(JSON.stringify(values))
-          )}
-        >
-          <TextInput
-            variant="unstyled"
-            placeholder="your@email.com"
-            {...form.getInputProps("name")}
-            classNames={{
-              input: "bg-green-400",
-              unstyledVariant: "bg-yellow-300",
-            }}
-          />
-          <Group position="right" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
       </main>
     </div>
   );
