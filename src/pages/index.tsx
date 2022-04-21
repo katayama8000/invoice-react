@@ -54,7 +54,6 @@ const Home: NextPage = () => {
     },
   });
 
-  const [invoices, setInvoices] = useState<number>(0);
   return (
     <div className="h-screen bg-gray-800">
       <header className="max-w-8xl m-auto bg-yellow-200 p-5">
@@ -62,7 +61,7 @@ const Home: NextPage = () => {
           <div className="flex basis-1/4">
             <div>Invoices</div>
             <br />
-            <div>There are total {invoices} invoices</div>
+            <div>There are total {data?.length} invoices</div>
           </div>
           <div className="basis-1/2" />
           <div className="flex basis-1/4">
