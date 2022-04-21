@@ -1,12 +1,21 @@
 import { Button, TextInput, Group, NumberInput, Drawer } from "@mantine/core";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HeadButton } from "../components/button/HeadButton";
 import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
+import { date, z } from "zod";
 import Link from "next/link";
+import { useCollection } from "react-firebase-hooks/firestore";
 
-import { collection, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  DocumentData,
+  FirestoreError,
+  getDoc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 import { SimpleInvoice } from "@component/SimpleInvoice";
@@ -20,12 +29,29 @@ const schema = z.object({
     .min(18, { message: "You must be at least 18 to create an account" }),
 });
 
+export const FirestoreCollection = (): {
+  // value: QuerySnapshot<DocumentData> | undefined;
+  data: DocumentData[] | undefined;
+  loading: boolean;
+  error: FirestoreError | undefined;
+} => {
+  const [value, loading, error] = useCollection(collection(db, "invoice"), {
+    snapshotListenOptions: { includeMetadataChanges: true },
+  });
+
+  const data = value?.docs.map((d) => {
+    return { id: d.id, invoice: d.data() };
+  });
+
+  return { data, loading, error };
+};
+
 const Home: NextPage = () => {
-  const func = async () => {
-    const docRef = doc(db, "invoice", "4ajkdekTQljlysdA3BXd");
-    const docSnap = await getDoc(docRef);
-    console.log(docSnap.data());
-  };
+  const { data } = FirestoreCollection();
+  console.log("data", data);
+
+  useEffect(() => {}, []);
+
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -33,12 +59,12 @@ const Home: NextPage = () => {
       email: "",
       age: 20,
     },
-
     validate: {
       email: (value) =>
         /^\S+@\S+$/.test(value) ? null : "this email is not valid",
     },
   });
+
   const [invoices, setInvoices] = useState<number>(0);
   return (
     <div className="h-screen bg-gray-800">
@@ -67,11 +93,7 @@ const Home: NextPage = () => {
         </div>
       </header>
       <main className="m-auto max-w-5xl text-white">
-        <SimpleInvoice />
-        <SimpleInvoice />
-        <SimpleInvoice />
-        <SimpleInvoice />
-        <h1 onClick={func}>sample</h1>
+        <SimpleInvoice data={data} />
         <form
           onSubmit={form.onSubmit((values) =>
             console.log(JSON.stringify(values))

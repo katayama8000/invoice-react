@@ -1,23 +1,40 @@
 import React from "react";
 import { StatusButton } from "@component/button/StatusButton";
+import { DocumentData } from "firebase/firestore";
 
-export const SimpleInvoice: React.VFC = () => {
+type invoiceItemList = {
+  id: string;
+  itemName: string;
+  price: string;
+  qty: string;
+  total: number;
+};
+
+type Props = {
+  data: DocumentData[] | undefined;
+};
+
+export const SimpleInvoice: React.VFC<Props> = ({ data }) => {
   const uuid = 356734;
-  const date = 2022;
-  const name = "coffee";
-  const price = 100;
 
   return (
     <div>
-      <div className="mt-5 flex flex-row items-end justify-around rounded-3xl bg-gray-600 py-5 px-2">
-        <div>{uuid}</div>
-        <div>{date}</div>
-        <div>{name}</div>
-        <div>{price}</div>
-        <div>
-          <StatusButton title="Draft" />
-        </div>
-      </div>
+      {data?.map((item) => {
+        return (
+          <div
+            key={item.id}
+            className="mt-5 flex flex-row items-end justify-around rounded-3xl bg-gray-600 py-5 px-2"
+          >
+            <div>{item.id}</div>
+            <div>{item.invoice.paymentDueDate}</div>
+            <div>{item.invoice.clientName}</div>
+            <div>${item.invoice.invoiceTotal}</div>
+            <div>
+              <StatusButton title="Draft" />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
