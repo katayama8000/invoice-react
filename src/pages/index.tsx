@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import { HeadButton } from "../components/button/HeadButton";
-import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
 import Link from "next/link";
 import { useCollection } from "react-firebase-hooks/firestore";
 
@@ -10,14 +8,6 @@ import { db } from "../../config/firebase";
 
 import { SimpleInvoice } from "@component/SimpleInvoice";
 import { InputInvoice } from "@component/InputInvoice";
-
-const schema = z.object({
-  name: z.string().min(2, { message: "Name should have at least 2 letters" }),
-  email: z.string().email({ message: "Invalid email" }),
-  age: z
-    .number()
-    .min(18, { message: "You must be at least 18 to create an account" }),
-});
 
 export const FirestoreCollection = (): {
   // value: QuerySnapshot<DocumentData> | undefined;
@@ -38,20 +28,6 @@ export const FirestoreCollection = (): {
 
 const Home: NextPage = () => {
   const { data } = FirestoreCollection();
-
-  const form = useForm({
-    schema: zodResolver(schema),
-    initialValues: {
-      name: "",
-      email: "",
-      age: 20,
-    },
-    validate: {
-      email: (value) =>
-        /^\S+@\S+$/.test(value) ? null : "this email is not valid",
-    },
-  });
-
   return (
     <div className="h-screen bg-gray-800">
       <header className="max-w-8xl m-auto bg-yellow-200 p-5">
