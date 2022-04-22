@@ -47,7 +47,6 @@ const SignUp: NextPage = () => {
             {...form.getInputProps("confirmPassword")}
           />
           <div className="mt-5 text-center">
-            <Button type="submit">sign up</Button>
             <SignButton type="submit" title="sign up" />
           </div>
         </form>
