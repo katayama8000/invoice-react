@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mantine/core";
+import { Button, Group, Modal } from "@mantine/core";
 
 type Props = {
   title: "Pending" | "Paid" | "Draft";
+  onClick?: () => void;
+  modalFlag: boolean;
 };
 type colorType = "red" | "green" | "gray" | undefined;
 type circleColor = "bg-red-500" | "bg-green-500" | "bg-gray-500" | undefined;
 
-export const StatusButton: React.VFC<Props> = ({ title }) => {
+export const StatusButton: React.VFC<Props> = ({
+  title,
+  onClick,
+  modalFlag,
+}) => {
+  const [opened, setOpened] = useState(false);
   const [circleColor, setCircleColor] = useState<circleColor>();
+
+  useEffect(() => {
+    setOpened(modalFlag);
+  }, []);
   let color: colorType;
   let style = `${circleColor} inline-block h-2 w-2 rounded-full mr-1`;
 
@@ -31,9 +42,19 @@ export const StatusButton: React.VFC<Props> = ({ title }) => {
     default:
   }
   return (
-    <Button variant="subtle" color={color}>
-      <span className={style} />
-      {title}
-    </Button>
+    <div>
+      <Button variant="subtle" color={color} onClick={onClick}>
+        <span className={style} />
+        {title}
+        {modalFlag}
+      </Button>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="状態を変更してもよいですか？"
+      >
+        Modal without header, press escape or click on overlay to close
+      </Modal>
+    </div>
   );
 };

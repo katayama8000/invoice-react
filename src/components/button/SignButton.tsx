@@ -7,10 +7,16 @@ type Props = {
   type: "submit" | "reset" | "button";
 };
 
-export const SignButton: React.VFC<Props> = ({ title }) => {
+export const SignButton: React.VFC<Props> = ({ title, type }) => {
   return (
     <div>
-      <Button variant="outline" color="violet" radius="lg" size="xl">
+      <Button
+        variant="outline"
+        color="violet"
+        radius="lg"
+        size="xl"
+        type="submit"
+      >
         {title}
       </Button>
     </div>

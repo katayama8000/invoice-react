@@ -9,6 +9,7 @@ import { NativeSelect } from "@mantine/core";
 import { HeadButton } from "../components/button/HeadButton";
 import { SimpleInvoice } from "@component/SimpleInvoice";
 import { InputInvoice } from "@component/InputInvoice";
+import { useState } from "react";
 
 export const FirestoreCollection = (): {
   // value: QuerySnapshot<DocumentData> | undefined;
@@ -21,21 +22,27 @@ export const FirestoreCollection = (): {
   });
 
   const data = value?.docs.map((d) => {
-    return { id: d.id, invoice: d.data() };
+    return d.data();
   });
 
   return { data, loading, error };
 };
 
+const filteredInvoices = (x: string) => {};
+
 const Home: NextPage = () => {
   const { data } = FirestoreCollection();
+  console.log(data);
+  console.log("レンダリング");
+
+  const [invoice, setInvoice] = useState(data);
+
   return (
-    <div className="h-screen bg-gray-800">
+    <div className="h-screen bg-gray-800 ">
       <header className="max-w-8xl m-auto bg-yellow-200 p-5">
         <div className="flex flex-row">
           <div className="flex basis-1/4">
             <div>Invoices</div>
-            <br />
             <div>There are total {data?.length} invoices</div>
           </div>
           <div className="basis-1/4" />
@@ -49,7 +56,7 @@ const Home: NextPage = () => {
                 { value: "No-filter", label: "No-filter" },
               ]}
               className="mr-2"
-              onChange={(event) => alert(event.currentTarget.value)}
+              onChange={(event) => filteredInvoices(event.currentTarget.value)}
             />
             <InputInvoice />
             <Link href="/signup">
@@ -66,9 +73,18 @@ const Home: NextPage = () => {
           </div>
         </div>
       </header>
-      <main className="m-auto max-w-5xl text-white">
-        <SimpleInvoice data={data} />
-      </main>
+      {data?.length !== 0 ? (
+        <>
+          <main className="m-auto max-w-5xl text-white">
+            <SimpleInvoice data={data} />
+          </main>
+        </>
+      ) : (
+        <div className="text-white">
+          <h1>There is nothing here</h1>
+          <div>create a new invoice by clicking the New Invoice button </div>
+        </div>
+      )}
     </div>
   );
 };
