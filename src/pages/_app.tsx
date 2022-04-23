@@ -16,15 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <RecoilRoot>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={
-            {
-              /** Put your mantine theme override here */
-            }
-          }
-        >
+        <MantineProvider withGlobalStyles withNormalizeCSS>
           <Component {...pageProps} />
         </MantineProvider>
       </RecoilRoot>
