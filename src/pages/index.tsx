@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Link from "next/link";
 
@@ -9,7 +10,9 @@ import { NativeSelect } from "@mantine/core";
 import { HeadButton } from "../components/button/HeadButton";
 import { SimpleInvoice } from "@component/SimpleInvoice";
 import { InputInvoice } from "@component/InputInvoice";
-import { useState } from "react";
+
+import { useRecoilState } from "recoil";
+import { buttonColorState } from "@component/atoms";
 
 export const FirestoreCollection = (): {
   // value: QuerySnapshot<DocumentData> | undefined;
@@ -30,10 +33,11 @@ export const FirestoreCollection = (): {
 
 const filteredInvoices = (x: string) => {};
 
+const changeButtonColor = (color: string) => color;
+
 const Home: NextPage = () => {
+  const [buttonColor, setButtonColor] = useRecoilState(buttonColorState);
   const { data } = FirestoreCollection();
-  console.log(data);
-  console.log("レンダリング");
 
   const [invoice, setInvoice] = useState(data);
 
@@ -47,6 +51,26 @@ const Home: NextPage = () => {
           </div>
           <div className="basis-1/4" />
           <div className="flex basis-1/2">
+            <NativeSelect
+              placeholder="Color"
+              data={[
+                { value: "red", label: "red" },
+                { value: "pink", label: "pink" },
+                { value: "grape", label: "grape" },
+                { value: "violet", label: "violet" },
+                { value: "indigo", label: "indigo" },
+                { value: "cyan", label: "cyan" },
+                { value: "teal", label: "teal" },
+                { value: "green", label: "green" },
+                { value: "lime", label: "lime" },
+                { value: "yellow", label: "yellow" },
+                { value: "orange", label: "orange" },
+              ]}
+              className="mr-2"
+              onChange={(event) =>
+                setButtonColor(changeButtonColor(event.target.value))
+              }
+            />
             <NativeSelect
               placeholder="filter by status"
               data={[
@@ -70,6 +94,11 @@ const Home: NextPage = () => {
               </a>
             </Link>
             <HeadButton title="個人情報" className="mx-2" />
+            <Link href="/sample">
+              <a>
+                <HeadButton title="検証画面" className="mx-2" />
+              </a>
+            </Link>
           </div>
         </div>
       </header>
